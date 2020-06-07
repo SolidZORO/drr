@@ -1,0 +1,36 @@
+# OS
+*~
+.DS_Store
+
+# Compiled
+/dist
+/.dist
+/_dist
+__docker__
+__docker-data__
+__DOCKER-DATA__
+__docker-data-dev__
+__DOCKER-DATA-DEV__
+.docker
+.docker__
+node_modules
+
+# Logs
+logs
+*.log
+.env*
+!.env.example
+
+# IDEs
+.idea
+.project
+.classpath
+.c9
+*.launch
+.settings
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

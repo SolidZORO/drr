@@ -1,0 +1,49 @@
+version: '3.6'
+
+networks:
+  default:
+    external:
+      name: ${NETWORK_NAME}
+
+services:
+  mysql:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    image: mysql:5.7
+    restart: always
+    ports:
+      # ports include `inner` & `external`
+      - ${MYSQL_PORT}:3306
+      - 3399:3306
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./etc/timezone:/etc/timezone:ro
+      - ./etc/localtime:/etc/localtime:ro
+      - ./etc/mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./etc/mysql/mysql.conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:ro
+      - ${DATA_DIR}/mysql/data:/var/lib/mysql:rw,cached
+      - ${DATA_DIR}/mysql/logs:/var/log/mysql:rw,cached
+  adminer:
+    container_name: ${ADMINER_CONTAINER_NAME}
+    image: adminer:latest
+    restart: always
+    ports:
+      - ${ADMINER_PORT}:8080
+  nginx:
+    container_name: ${NGINX_CONTAINER_NAME}
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 8080:8080
+      - 443:443
+    volumes:
+      - ./etc/timezone:/etc/timezone:ro
+      - ./etc/localtime:/etc/localtime:ro
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:rw,cached
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d:rw,cached
+      - ./usr/share/nginx/html:/usr/share/nginx/html:rw,cached
+      - ${DATA_DIR}/nginx/logs:/var/log/nginx:rw,cached
