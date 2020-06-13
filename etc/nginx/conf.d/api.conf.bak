@@ -1,0 +1,29 @@
+upstream api {
+    server prod_api:5000;
+}
+
+server {
+    listen 80;
+    server_name api.leaa.xxx;
+
+    client_max_body_size 20m;
+
+    rewrite_log on;
+    error_log /var/log/nginx/error-api.log error;
+
+    gzip on;
+    gzip_min_length 4k;
+    gzip_buffers 32 8k;
+    gzip_comp_level 3;
+    gzip_types text/plain application/javascript application/x-javascript text/css application/json application/xml text/javascript application/x-httpd-php;
+    gzip_vary on;
+
+    location / {
+        proxy_pass       http://api;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Nginx-Proxy true;
+        proxy_set_header Host $http_host;
+        proxy_redirect   off;
+    }
+}

@@ -12,12 +12,11 @@ services:
     restart: always
     ports:
       - 80:80
-      - 8080:8080
       - 443:443
     volumes:
       - ./etc/timezone:/etc/timezone:ro
       - ./etc/localtime:/etc/localtime:ro
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:rw,cached
       - ./etc/nginx/conf.d:/etc/nginx/conf.d:rw,cached
-      - ./usr/share/nginx/html:/usr/share/nginx/html:rw,cached
+      - ${SITE_DIR}:/usr/share/nginx/html:rw,cached
       - ${DATA_DIR}/nginx/logs:/var/log/nginx:rw,cached

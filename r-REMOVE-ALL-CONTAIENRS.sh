@@ -10,10 +10,7 @@ case "$response" in
         if [ -n "$CIDS" ]; then
             docker container stop $CIDS
             docker container rm -f $CIDS
-            echo "\n\n"
-
-            docker-compose ps
-            echo "\n\n"
+            echo "\n\n🎉  REMOVE ALL CONTAINERS!\n\n"
 
             docker container ls -a
             echo "\n\n"
