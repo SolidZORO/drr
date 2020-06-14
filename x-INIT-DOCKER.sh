@@ -11,6 +11,7 @@ case "$response" in
             printf "\n👌  Already %s, do NOT Init :)\n\n" $DOTENV_FILE
           else
             cp ./.env.example $DOTENV_FILE
+            printf "\n✅  Created %s\n\n" $DOTENV_FILE
         fi
 
         MYSQL_FILE="./etc/mysql/conf.d/mysql.cnf"
@@ -18,6 +19,7 @@ case "$response" in
             printf "\n👌  Already %s, do NOT Init :)\n\n" MYSQL_FILE
           else
             cp "$MYSQL_FILE.example" $MYSQL_FILE
+            printf "\n✅  Created %s\n\n" $MYSQL_FILE
         fi
 
         MYSQLD_FILE="./etc/mysql/mysql.conf.d/mysqld.cnf"
@@ -25,6 +27,7 @@ case "$response" in
             printf "\n👌  Already %s, do NOT Init :)\n\n" MYSQLD_FILE
           else
             cp "$MYSQLD_FILE.example" $MYSQLD_FILE
+            printf "\n✅  Created %s\n\n" $MYSQLD_FILE
         fi
 
         ;;
