@@ -3,7 +3,7 @@
 cd "$(dirname "$0")" || exit
 
 docker-compose -f docker-compose.mysql.yml down
-echo "\n\n🎉  MYSQL DOWN!\n\n"
+printf "\n\n🎉  MYSQL DOWN!\n\n"
 
 docker container ls -a
-echo "\n\n"
+printf "\n\n"
