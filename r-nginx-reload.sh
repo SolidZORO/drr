@@ -20,7 +20,7 @@ if [ -f .env ]
     echo "---- <${C_NAME}> reload ----"
     # nginx -s `force-reload` for acme.sh
     # https://github.com/acmesh-official/acme.sh#3-install-the-cert-to-apachenginx-etc
-    docker exec -it "${C_NAME}" nginx -s force-reload
+    docker exec -it "${C_NAME}" nginx -s reload
     docker top "${C_NAME}"
     printf  "\n\n🎉  NGINX RELOAD!\n\n"
 

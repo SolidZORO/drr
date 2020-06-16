@@ -8,9 +8,9 @@ A: sudo lsof -i :80, find and kill the app.
 
 Q: 使用 acme.sh 自动部署 SSL？
 
-A: 这里我只说一下我的个人经验。
+A: 这里我只说一下我的个人经验，其实不推荐用于 production 环境，偶尔会由于网络波动，出现掉签现象。
 
-安装、申请什么的读一下 `https://github.com/acmesh-official/acme.sh` 就好了，当然为了避免我以后跳过去读，这里还是记录一下：
+嗯，安装、申请什么的读一下 `https://github.com/acmesh-official/acme.sh` 就好了，当然为了避免我以后跳过去读，这里还是记录一下：
 
 ```
 # 安装
@@ -36,7 +36,7 @@ export DP_Key="kkkkkkkkkkkkkk"
 acme.sh --issue --dns dns_dp -d xxxx.com -d www.xxxx.com
 
 # 也支持野卡 (因为 * 是特殊字符记得加引号)
-acme.sh --issue --dns dns_dp -d "*.xxxx.com" -d www.xxxx.com
+acme.sh --issue --dns dns_dp -d "*.xxxx.com" -d xxxx.com
 ```
 
 这里要等至少 120s。 然后就得到 SSL 证书了。接下来，把 SSL 证书丢到你自己的 ssl 目录：

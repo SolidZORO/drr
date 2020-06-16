@@ -1,3 +1,4 @@
 *.conf
 *.conf.bak
-!default.conf
+/backup
+/bak
