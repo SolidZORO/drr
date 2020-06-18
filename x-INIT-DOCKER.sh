@@ -32,7 +32,6 @@ case "$response" in
 
         ;;
     *)
-        # shellcheck disable=SC2028
-        echo "\nCancel\n"
+        printf "\nCancel\n"
         ;;
 esac

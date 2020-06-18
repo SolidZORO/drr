@@ -2,7 +2,8 @@
 
 cd "$(dirname "$0")" || exit
 
-read -r -p "Remove All Containers? [y/N] " response
+read -r -p "⚠️⚠️⚠️ Remove ALL Containers? [y/N] " response
+
 case "$response" in
     [yY][eE][sS]|[yY])
         CIDS=$(docker container ls -aq)
@@ -10,19 +11,17 @@ case "$response" in
         if [ -n "$CIDS" ]; then
             docker container stop $CIDS
             docker container rm -f $CIDS
-            echo "\n\n🎉  REMOVE ALL CONTAINERS!\n\n"
+            printf "\n\n🎉  REMOVE ALL CONTAINERS!\n\n"
 
             docker container ls -a
-            echo "\n\n"
+            printf "\n\n"
           else
-            # shellcheck disable=SC2028
-            echo '\nNot Found Containers\n'
+            printf '\nNot Found Containers\n'
         fi
 
         # docker container prune -f
         ;;
     *)
-        # shellcheck disable=SC2028
-        echo "\nCancel\n"
+        printf "\nCancel\n"
         ;;
 esac

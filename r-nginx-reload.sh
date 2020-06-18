@@ -13,10 +13,6 @@ if [ -f .env ]
     docker exec -it "${C_NAME}" nginx -t
     printf "\n"
 
-    echo "---- <${C_NAME}> logs tail 5 ----"
-    docker logs "${C_NAME}" --tail 5
-    printf "\n"
-
     echo "---- <${C_NAME}> reload ----"
     # nginx -s `force-reload` for acme.sh
     # https://github.com/acmesh-official/acme.sh#3-install-the-cert-to-apachenginx-etc
