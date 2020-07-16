@@ -27,6 +27,7 @@ services:
       - ./etc/mysql/mysql.conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:ro
       - ${DATA_DIR}/mysql/data:/var/lib/mysql:rw,cached
       - ${DATA_DIR}/mysql/logs:/var/log/mysql:rw,cached
+      - ${DATA_DIR}/mysql/backups:/var/backups:rw,cached
   adminer:
     container_name: ${__ENV__}_${ADMINER_CONTAINER_NAME}
     image: adminer:latest
