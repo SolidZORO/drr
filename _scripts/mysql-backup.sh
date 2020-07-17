@@ -2,8 +2,7 @@
 
 cd "$(dirname "$0")" || exit
 
-__ROOT_PATH__="$(
-  cd "$(dirname "$0")"
+__ROOT_DIR__="$(
   cd ".."
   pwd
 )" || exit
@@ -14,7 +13,7 @@ getEnvVar() {
     return
   fi
 
-  local ENV_FILE="$__ROOT_PATH__/.env"
+  local ENV_FILE="$__ROOT_DIR__/.env"
   if [ -n "$2" ]; then
     ENV_FILE="$2"
   fi
@@ -25,32 +24,62 @@ getEnvVar() {
   echo ${VAR[1]}
 }
 
-MYSQL_CONTAINER="$(getEnvVar __ENV__)_$(getEnvVar MYSQL_CONTAINER_NAME)"
+# shellcheck disable=SC2046
+# shellcheck disable=SC2005
+DATA_DIR="$(echo "$(getEnvVar DATA_DIR)" | sed 's/^.[/]//g')"
+__BACKUP_DIR__="$__ROOT_DIR__/$DATA_DIR/mysql/backups/"
 
+if [ ! -d ${__BACKUP_DIR__} ]; then
+  printf "🔰 MKDIR: %s\n" $__BACKUP_DIR__
+  mkdir -p $__BACKUP_DIR__
+  chmod -R 777 $__BACKUP_DIR__
+fi
+
+cd $__BACKUP_DIR__ || exit
+
+MYSQL_CONTAINER="$(getEnvVar __ENV__)_$(getEnvVar MYSQL_CONTAINER_NAME)"
 MYSQL_BACKUP_KEEP_DAYS=$(getEnvVar MYSQL_BACKUP_KEEP_DAYS)
 MYSQL_BACKUP_TABLES=$(getEnvVar MYSQL_BACKUP_TABLES)
+
 IFS=',' read -ra BAK <<<"$MYSQL_BACKUP_TABLES"
 
-#
-#
+printf "\n"
+printf "🔰 ROOT_DIR   : %s\n" $__ROOT_DIR__
+printf "🔰 BACKUP_DIR : %s\n" $__BACKUP_DIR__
+printf "\n"
+printf "📌 MYSQL_BACKUP_KEEP_DAYS : %s\n" $MYSQL_BACKUP_KEEP_DAYS
+printf "📌 MYSQL_BACKUP_TABLES    : %s\n" $MYSQL_BACKUP_TABLES
+printf "\n"
+
+# shellcheck disable=SC2129
+printf "$(date +%Y-%m-%d-%H:%M:%S) [Note] __ROOT_DIR__  : %s\n" $__ROOT_DIR__ >>"$__BACKUP_DIR__/_backup.log"
+printf "$(date +%Y-%m-%d-%H:%M:%S) [Note] __BACKUP_DIR__: %s\n\n" $__BACKUP_DIR__ >>"$__BACKUP_DIR__/_backup.log"
+
+# shellcheck disable=SC2028
+#echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] __ENV__: $(env)\n\n" >>"$__BACKUP_DIR__/_backup.log"
 
 for i in "${BAK[@]}"; do
-  echo "✅ BACKUP DB $i"
+  printf "BACKUP DB %s\n" $i
+
+  #e.g. 2020-06-08T16:39:15 [Backup] mysqlœ
+  printf "$(date +%Y-%m-%d-%H:%M:%S) [Note] BackupStart: %s\n" $i >>"$__BACKUP_DIR__/_backup.log"
 
   # http://dev.mysql.com/doc/refman/5.5/en/password-security-user.html
-  CMD_BACKUP="MYSQL_PWD='$(getEnvVar MYSQL_PASSWORD)' mysqldump --defaults-extra-file=/etc/mysql/conf.d/mysql.cnf -u$(getEnvVar MYSQL_USER) $i"
+  CMD_BACKUP="MYSQL_PWD='$(getEnvVar MYSQL_PASSWORD)' mysqldump -u$(getEnvVar MYSQL_USER) $i"
   CMD_ZIP="gzip > /var/backups/$i-$(date +%Y%m%d-%H%M%S).sql.gz"
 
+  # shellcheck disable=SC2028
+  echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] $CMD_ZIP" >>"$__BACKUP_DIR__/_backup.log"
+
   docker exec -i "$MYSQL_CONTAINER" sh -c "$CMD_BACKUP | $CMD_ZIP"
+
+  printf "$(date +%Y-%m-%d-%H:%M:%S) [Note] BackupDnoe: %s\n\n" $i >>"$__BACKUP_DIR__/_backup.log"
 done
 
-cd "$__ROOT_PATH__/$(getEnvVar DATA_DIR)/mysql/backups" || exit
-
-printf "\n\n"
-
-printf "📌 MYSQL_BACKUP_KEEP_DAYS: %s\n" $MYSQL_BACKUP_KEEP_DAYS
-printf "📌 MYSQL_BACKUP_TABLES: %s\n" $MYSQL_BACKUP_TABLES
-printf "📌 BACKUPSDIR: %s\n" "$(pwd)"
+# shellcheck disable=SC2028
+printf "\n\n\n\n" >>"$__BACKUP_DIR__/_backup.log"
 
 # delete > N day backups
 find . -name "*.sql.gz" -mtime +$MYSQL_BACKUP_KEEP_DAYS -exec rm -rf {} \;
+
+printf "\n\n✅  BACKUP DONE!\n\n\n\n"

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 cd "$(dirname "$0")" || exit
 
@@ -10,7 +10,7 @@ read -r -p "⚠️  MYSQL reboot? [y/N] " response
 case "$response" in
     [yY][eE][sS]|[yY])
         sh r-mysql-down.sh && sh r-mysql-up.sh
-        printf "\n\n🎉  MYSQL rebooooooooot!\n\n"
+        printf "\n\n🔄  MYSQL rebooooooooot!\n\n"
         ;;
     *)
         # shellcheck disable=SC2028
