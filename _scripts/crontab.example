@@ -1,4 +1,1 @@
-# SHELL=/bin/bash
-# PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
 0 0 * * * /var/www/dockerrr/_scripts/mysql-backup.sh  &> /dev/null

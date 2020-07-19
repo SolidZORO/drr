@@ -82,7 +82,7 @@ for i in "${BAK[@]}"; do
   # docker us `ABS-PATH`
   "$__DOCKER_PATH__" exec -i "$MYSQL_CONTAINER" sh -c "$CMD_BACKUP | $CMD_ZIP"
 
-  echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] EOF: Done!\n" >>"$__BACKUP_DIR__/_backup.log"
+  echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] BACKUP DONE!" >>"$__BACKUP_DIR__/_backup.log"
 done
 
 # shellcheck disable=SC2028
