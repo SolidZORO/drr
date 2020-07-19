@@ -3,7 +3,13 @@
 Auto Deployment Multiple Node.js App in Docker Lab.
 
 
+
+
 ## Tips
+
+### bach
+
+if `sh ./xxx.sh` get error `Syntax error: redirection unexpected`, you can try `bash ./xxx.sh`.
 
 ### mysql
 
