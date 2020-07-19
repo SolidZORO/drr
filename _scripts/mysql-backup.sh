@@ -79,7 +79,8 @@ for i in "${BAK[@]}"; do
 
   echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] CMD: $CMD_ZIP" >>"$__BACKUP_DIR__/_backup.log"
 
-  docker exec -i "$MYSQL_CONTAINER" sh -c "$CMD_BACKUP | $CMD_ZIP"
+  # docker us `ABS-PATH`
+  "$__DOCKER_PATH__" exec -i "$MYSQL_CONTAINER" sh -c "$CMD_BACKUP | $CMD_ZIP"
 
   echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] EOF: Done!\n" >>"$__BACKUP_DIR__/_backup.log"
 done
