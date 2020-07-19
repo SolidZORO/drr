@@ -1,10 +1,10 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 cd "$(dirname "$0")" || exit
 
 docker-compose -f docker-compose.nginx.yml up -d && printf "\n\n✅  NGINX UP!\n\n"
 
-docker container ls -a && printf "\n\n"
+docker container ls | grep nginx && printf "\n\n"
 
 
 # if : port is already allocated, you can check use:

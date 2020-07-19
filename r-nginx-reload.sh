@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 cd "$(dirname "$0")" || exit
 
@@ -20,7 +20,7 @@ if [ -f .env ]
     docker top "${C_NAME}"
     printf  "\n\n🔄  NGINX RELOAD!\n\n"
 
-    docker container ls -a
+    docker container ls | grep nginx
     printf "\n\n"
   else
     echo "Not Found .env File"

@@ -39,6 +39,7 @@ node_modules
 
 /__docker__
 /__docker-data__
+/__docker-backup__
 /__DOCKER-DATA__
 /__docker-data-dev__
 /__DOCKER-DATA-DEV__
