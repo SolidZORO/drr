@@ -58,6 +58,7 @@ case "$response" in
     mkdir -p "$__BACKUP_DIR__/mysql"
     mkdir -p "$__BACKUP_DIR__/nginx"
 
+    chmod -R 777 $__DATA_DIR__
     chmod -R 777 $__BACKUP_DIR__
     printf "\n✅  Created %s\n\n" $__BACKUP_DIR__
   else
