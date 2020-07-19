@@ -52,8 +52,12 @@ case "$response" in
 
   # shellcheck disable=SC2005
   __DATA_DIR__="$(echo "$(getEnvVar DATA_DIR)" | sed 's/^.[/]//g')"
-  __BACKUP_DIR__="$__ROOT_DIR__/$__DATA_DIR__/_backup"
-  if [ ! -d $__BACKUP_DIR__ ]; then
+  if [ ! -d $__DATA_DIR__ ]; then
+    mkdir -p $__DATA_DIR__
+    mkdir -p "$__DATA_DIR__/mysql"
+    mkdir -p "$__DATA_DIR__/nginx"
+
+    __BACKUP_DIR__="$__ROOT_DIR__/$__DATA_DIR__/_backup"
     mkdir -p $__BACKUP_DIR__
     mkdir -p "$__BACKUP_DIR__/mysql"
     mkdir -p "$__BACKUP_DIR__/nginx"
