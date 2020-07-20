@@ -37,4 +37,6 @@ services:
     ports:
       - ${ADMINER_PORT}:8080
     volumes:
+      - ./etc/timezone:/etc/timezone:ro
+      - ./etc/localtime:/etc/localtime:ro
       - ./var/www/html/plugins/dynamic-title-info.php:/var/www/html/plugins/dynamic-title-info.php:ro
