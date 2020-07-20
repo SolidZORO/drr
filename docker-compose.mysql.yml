@@ -10,16 +10,15 @@ services:
     container_name: ${__ENV__}_${MYSQL_CONTAINER_NAME}
     image: mysql:5.7
     restart: always
-    ports:
-      # ports include `inner` & `external`
-      - ${MYSQL_PORT}:3306
-      - 3399:3306
     environment:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      TZ: Asia/Shanghai
+      TZ: ${TZ}
+    ports:
+      # ports include `inner` & `external`
+      - ${MYSQL_PORT}:3306
     volumes:
       - ./etc/timezone:/etc/timezone:ro
       - ./etc/localtime:/etc/localtime:ro
@@ -32,9 +31,10 @@ services:
     container_name: ${__ENV__}_${ADMINER_CONTAINER_NAME}
     image: adminer:latest
     restart: always
-    ports:
-      - ${ADMINER_PORT}:8080
     environment:
       ADMINER_PLUGINS: "enum-types enum-option tables-filter sql-log dynamic-title-info"
+      TZ: ${TZ}
+    ports:
+      - ${ADMINER_PORT}:8080
     volumes:
       - ./var/www/html/plugins/dynamic-title-info.php:/var/www/html/plugins/dynamic-title-info.php:ro

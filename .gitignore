@@ -14,6 +14,13 @@ etc/mysql/mysql.conf.d/*.cnf
 etc/mysql/mysql.conf.d/*.cnf.bak
 !etc/mysql/mysql.conf.d/mysql.cnf.example
 
+etc/localtime*
+!etc/localtime.example
+
+etc/timezone*
+!etc/timezone.example
+
+
 
 # OS
 *~
