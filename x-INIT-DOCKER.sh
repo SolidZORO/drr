@@ -50,6 +50,22 @@ case "$response" in
     printf "\n✅  Created %s\n\n" $MYSQLD_FILE
   fi
 
+  LOCALTIME_FILE="./etc/localtime"
+  if [ -f $LOCALTIME_FILE ]; then
+    printf "\n👌  Already %s, do NOT Init :)\n\n" $LOCALTIME_FILE
+  else
+    cp "$LOCALTIME_FILE.example" $LOCALTIME_FILE
+    printf "\n✅  Created %s\n\n" $LOCALTIME_FILE
+  fi
+
+  TIMEZONE_FILE="./etc/timezone"
+  if [ -f $TIMEZONE_FILE ]; then
+    printf "\n👌  Already %s, do NOT Init :)\n\n" $TIMEZONE_FILE
+  else
+    cp "$TIMEZONE_FILE.example" $TIMEZONE_FILE
+    printf "\n✅  Created %s\n\n" $TIMEZONE_FILE
+  fi
+
   # shellcheck disable=SC2005
   __DATA_DIR__="$(echo "$(getEnvVar DATA_DIR)" | sed 's/^.[/]//g')"
   if [ ! -d $__DATA_DIR__ ]; then
@@ -57,12 +73,17 @@ case "$response" in
     mkdir -p "$__DATA_DIR__/mysql"
     mkdir -p "$__DATA_DIR__/nginx"
 
-    __BACKUP_DIR__="$__ROOT_DIR__/$__DATA_DIR__/_backup"
+    printf "\n✅  Created %s\n\n" $__DATA_DIR__
+  else
+    printf "\n👌  Already %s, do NOT Init :)\n\n" $__DATA_DIR__
+  fi
+
+  __BACKUP_DIR__="$__ROOT_DIR__/$__DATA_DIR__/_backup"
+  if [ ! -d $__BACKUP_DIR__ ]; then
     mkdir -p $__BACKUP_DIR__
     mkdir -p "$__BACKUP_DIR__/mysql"
     mkdir -p "$__BACKUP_DIR__/nginx"
 
-    chmod -R 777 $__DATA_DIR__
     chmod -R 777 $__BACKUP_DIR__
     printf "\n✅  Created %s\n\n" $__BACKUP_DIR__
   else
