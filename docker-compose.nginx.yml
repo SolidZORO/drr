@@ -8,7 +8,7 @@ networks:
 services:
   nginx:
     container_name: ${__ENV__}_${NGINX_CONTAINER_NAME}
-    image: nginx:alpine
+    image: ${NGINX_IMAGE}
     restart: always
     environment:
       TZ: ${TZ}

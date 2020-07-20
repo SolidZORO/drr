@@ -8,7 +8,7 @@ networks:
 services:
   mysql:
     container_name: ${__ENV__}_${MYSQL_CONTAINER_NAME}
-    image: mysql:5.7
+    image: ${MYSQL_IMAGE}
     restart: always
     environment:
       MYSQL_USER: ${MYSQL_USER}
@@ -29,7 +29,7 @@ services:
       - ${DATA_DIR}/_backup/mysql:/var/backups:rw,cached
   adminer:
     container_name: ${__ENV__}_${ADMINER_CONTAINER_NAME}
-    image: adminer:latest
+    image: ${ADMINER_IMAGE}
     restart: always
     environment:
       ADMINER_PLUGINS: "enum-types enum-option tables-filter sql-log dynamic-title-info"
