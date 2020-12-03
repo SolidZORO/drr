@@ -2,6 +2,7 @@ version: '3.6'
 
 services:
   acme.sh:
+    container_name: acme.sh
     image: neilpang/acme.sh
     environment:
       ACME_DNS_ALI_KEY: ${ACME_DNS_ALI_KEY}
