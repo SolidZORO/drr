@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  acme.sh:
+    image: neilpang/acme.sh
+    environment:
+      ACME_DNS_ALI_KEY: ${ACME_DNS_ALI_KEY}
+      ACME_DNS_ALI_SECRET: ${ACME_DNS_ALI_SECRET}
+      ACME_DNS_DP_ID: ${ACME_DNS_DP_ID}
+      ACME_DNS_DP_KEY: ${ACME_DNS_DP_KEY}
+    command: daemon
+    volumes:
+      - ./etc/nginx/ssl.d:/acme.sh:rw,cached
