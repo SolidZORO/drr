@@ -43,12 +43,12 @@ acme.sh --issue --dns dns_dp -d "*.xxxx.com" -d xxxx.com
 
 ```
 # 如果你肯定有目录，这步可以省略
-mkdir -p "/var/www/dockerrr/etc/nginx/ssl.d/*.xxxx.com" &&
+mkdir -p "/var/www/drr/etc/nginx/ssl.d/*.xxxx.com" &&
 
 acme.sh --installcert -d "*.xxxx.com" \
---key-file        "/var/www/dockerrr/etc/nginx/ssl.d/*.xxxx.com/key.pem" \
---fullchain-file  "/var/www/dockerrr/etc/nginx/ssl.d/*.xxxx.com/cert.pem" \
---reloadcmd       "sh ~/dockerrr/r-nginx-reload.sh"
+--key-file        "/var/www/drr/etc/nginx/ssl.d/*.xxxx.com/key.pem" \
+--fullchain-file  "/var/www/drr/etc/nginx/ssl.d/*.xxxx.com/cert.pem" \
+--reloadcmd       "sh ~/drr/r-nginx-reload.sh"
 ```
 
 上面这个命令会在 SSL 续签成功的时候再次执行，所以不用再自己写一个 bash 丢到 crontab 了。
