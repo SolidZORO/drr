@@ -93,4 +93,8 @@ printf "\n\n\n\n" >>"$__BACKUP_LOG__"
 # delete > N day backups
 find . -name "*.sql.gz" -mtime +$MYSQL_BACKUP_KEEP_DAYS -exec rm -rf {} \;
 
+# Log
+# shellcheck disable=SC2046
+echo $(date +%Y%m%d-%H%M%S) mysql-backup >>"$HOME/.crontab.log" 2>&1
+
 printf "\n\n✅  BACKUP DONE!\n\n\n\n"
