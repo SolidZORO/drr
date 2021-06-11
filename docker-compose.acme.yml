@@ -9,11 +9,14 @@ services:
   acme.sh:
     container_name: acme.sh
     image: neilpang/acme.sh
-    environment:
-      Ali_Key: ${ACME_DNS_ALI_KEY}
-      Ali_Secret: ${ACME_DNS_ALI_SECRET}
-      DP_Id: ${ACME_DNS_DP_ID}
-      DP_Key: ${ACME_DNS_DP_KEY}
     command: daemon
     volumes:
       - ./etc/nginx/ssl.d:/acme.sh:rw,cached
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - Ali_Key=${ACME_DNS_ALI_KEY}
+      - Ali_Secret=${ACME_DNS_ALI_SECRET}
+      - DP_Id=${ACME_DNS_DP_ID}
+      - DP_Key=${ACME_DNS_DP_KEY}
+      - DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=nginx
+      - DEPLOY_DOCKER_CONTAINER_RELOAD_CMD="nginx -s reload"

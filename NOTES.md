@@ -12,7 +12,7 @@ A: 这里我只说一下我的个人经验，其实不推荐用于 production �
 
 嗯，安装、申请什么的读一下 `https://github.com/acmesh-official/acme.sh` 就好了，当然为了避免我以后跳过去读，这里还是记录一下：
 
-```
+```bash
 # 安装
 curl https://get.acme.sh | sh 
 
@@ -22,14 +22,14 @@ alias acme.sh=~/.acme.sh/acme.sh
 
 安装完成后，默认会给加上一条 crontab。
 
-```
+```bash
 7 0 * * * "/var/www/.acme.sh"/acme.sh --cron --home "/var/www/.acme.sh" > /dev/null
 ```
 
 
 我个人用的是 `DNSPod`，去官网拿到 Auth 后：
 
-```
+```bash
 export DP_Id="1111"
 export DP_Key="kkkkkkkkkkkkkk"
 
@@ -41,7 +41,7 @@ acme.sh --issue --dns dns_dp -d "*.xxxx.com" -d xxxx.com
 
 这里要等至少 120s。 然后就得到 SSL 证书了。接下来，把 SSL 证书丢到你自己的 ssl 目录：
 
-```
+```bash
 # 如果你肯定有目录，这步可以省略
 mkdir -p "/var/www/drr/etc/nginx/ssl.d/*.xxxx.com" &&
 
@@ -52,3 +52,12 @@ acme.sh --installcert -d "*.xxxx.com" \
 ```
 
 上面这个命令会在 SSL 续签成功的时候再次执行，所以不用再自己写一个 bash 丢到 crontab 了。
+
+
+启动 acme
+```bash
+#docker-compose -f docker-compose.acme.yml up -d
+docker-compose -f docker-compose.acme.yml up
+
+docker container ls
+```
