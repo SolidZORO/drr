@@ -6,12 +6,14 @@ cd ..
 # shellcheck disable=SC2034
 DOMAIN="xxxx.com"
 
+# shellcheck disable=SC2046
+echo $(date +%Y%m%d-%H%M%S) acme-issue $DOMAIN Start >>"$HOME/.crontab.log" 2>&1
+
 docker-compose -f docker-compose.acme.yml up -d
 #docker exec acme.sh --issue --dns dns_dp -d "*.$DOMAIN" -d $DOMAIN
 docker exec acme.sh --issue --dns dns_dp -d $DOMAIN
 
-# Log
 # shellcheck disable=SC2046
-echo $(date +%Y%m%d-%H%M%S) acme-issue $DOMAIN >>"$HOME/.crontab.log" 2>&1
+echo $(date +%Y%m%d-%H%M%S) acme-issue $DOMAIN End >>"$HOME/.crontab.log" 2>&1
 
 sh ./r-nginx-reload.sh
