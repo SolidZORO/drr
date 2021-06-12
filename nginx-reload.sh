@@ -18,7 +18,7 @@ if [ -f .env ]
     # https://github.com/acmesh-official/acme.sh#3-install-the-cert-to-apachenginx-etc
     docker exec -it "${C_NAME}" nginx -s reload
     docker top "${C_NAME}"
-    printf  "\n\n🔄  NGINX RELOAD!\n\n"
+    printf  "\n\n✅  Nginx is -s reload!\n\n"
 
     docker container ls | grep nginx
     printf "\n\n"

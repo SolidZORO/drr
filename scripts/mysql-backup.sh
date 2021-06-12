@@ -84,7 +84,7 @@ for i in "${BAK[@]}"; do
   # docker us `ABS-PATH`
   "$__DOCKER_PATH__" exec -i "$MYSQL_CONTAINER" sh -c "$CMD_BACKUP | $CMD_ZIP"
 
-  echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] BACKUP DONE!" >>"$__BACKUP_LOG__"
+  echo "$(date +%Y-%m-%d-%H:%M:%S) [Note] Mysql Backup is Done!" >>"$__BACKUP_LOG__"
 done
 
 # shellcheck disable=SC2028
@@ -93,7 +93,7 @@ printf "\n\n\n\n" >>"$__BACKUP_LOG__"
 # delete > N day backups
 find . -name "*.sql.gz" -mtime +$MYSQL_BACKUP_KEEP_DAYS -exec rm -rf {} \;
 
-printf "\n\n✅  BACKUP DONE!\n\n\n\n"
+printf "\n\n✅  MySQL Backup is Done!\n\n\n\n"
 
 # Log
 # shellcheck disable=SC2046

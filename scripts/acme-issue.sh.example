@@ -17,4 +17,4 @@ docker exec acme.sh --issue --dns dns_dp "${DOMAIN_ARGS[@]}"
 
 echo "$(date +%Y%m%d-%H%M%S)" acme-issue "${DOMAIN_ARGS[@]}" End >> "$HOME/.crontab.log" 2>&1
 
-sh ./r-nginx-reload.sh
+sh ./nginx-reload.sh

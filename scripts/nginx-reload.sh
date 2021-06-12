@@ -3,7 +3,7 @@
 cd "$(dirname "$0")" || exit
 
 cd ..
-sh ./r-nginx-reload.sh
+sh ./nginx-reload.sh
 
 # Log
 # shellcheck disable=SC2046

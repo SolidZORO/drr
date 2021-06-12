@@ -10,12 +10,12 @@ printf "\n\n"
 read -r -p "⚠️ ⚠️ ⚠️ Reboot ALL Containers? [y/N] " response
 
 case "$response" in
-  [yY][eE][sS]|[yY])
-    sh "$CURRENT_DIR/r-mysql-reboot.sh"
-    sh "$CURRENT_DIR/r-nginx-reboot.sh"
-    printf "🎉  Reboot All Containers!\n\n"
+  [yY][eE][sS] | [yY])
+    sh "$CURRENT_DIR/mysql-reboot.sh" -y
+    sh "$CURRENT_DIR/nginx-reboot.sh" -y
+    printf "✅  All Containers [Reboot] is Done!\n\n"
     ;;
   *)
-    printf "\nCancel\n"
+    printf "\nCancel\n\n"
     ;;
 esac
