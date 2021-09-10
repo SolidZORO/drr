@@ -4,17 +4,18 @@ cd "$(dirname "$0")" || exit
 cd ..
 
 DOMAIN="xxxx.com"
-DOMAIN_ARGS=(-d "$DOMAIN")
-#DOMAIN_ARGS=(-d "www.$DOMAIN" -d "$DOMAIN")
-#DOMAIN_ARGS=(-d "*.$DOMAIN" -d "$DOMAIN")
 
-echo " " >> "$HOME/.crontab.log" 2>&1
+#DOMAIN_ARGS="-d $DOMAIN"
+#DOMAIN_ARGS="-d \"www.${DOMAIN}\" -d \"${DOMAIN}\""
+DOMAIN_ARGS="-d \"*.${DOMAIN}\" -d \"${DOMAIN}\""
 
-echo "$(date +%Y%m%d-%H%M%S)" acme-issue "${DOMAIN_ARGS[@]}" Start >> "$HOME/.crontab.log" 2>&1
+ISSUE_ARGS="--issue --dns dns_dp ${DOMAIN_ARGS}"
+DOCKER_EXEC="docker exec acme.sh ${ISSUE_ARGS}"
+echo "${DOCKER_EXEC}"
 
-docker-compose -f docker-compose.acme.yml up -d
-docker exec acme.sh --issue --dns dns_dp "${DOMAIN_ARGS[@]}"
+echo " " >> "$HOME/.crontab.log" 2>&1 # return line
+echo "$(date +%Y%m%d-%H%M%S) ${DOCKER_EXEC}" >> "$HOME/.crontab.log" 2>&1
 
-echo "$(date +%Y%m%d-%H%M%S)" acme-issue "${DOMAIN_ARGS[@]}" End >> "$HOME/.crontab.log" 2>&1
+eval "${DOCKER_EXEC}"
 
 sh ./nginx-reload.sh

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")" || exit
+CURRENT_DIR="$(dirname "$0")"
 
-docker container ls | grep nginx
+cd "$CURRENT_DIR" || exit
+
+docker container ls
 printf "\n"
 
 yesFlag=''
@@ -15,7 +17,7 @@ while getopts 'y' flag; do
 done
 
 if [ "$yesFlag" != "y" ]; then
-  read -r -p "⚠️  All reboot? [y/N] " response
+  read -r -p "⚠️ ⚠️ ⚠️  Reboot ALL Containers? [y/N] " response
 
   if [ "$response" != "y" ]; then
     printf "\nCancel\n\n"
@@ -23,5 +25,7 @@ if [ "$yesFlag" != "y" ]; then
   fi
 fi
 
-sh all-down.sh
-sh all-up.sh
+sh "$CURRENT_DIR/all-down.sh" -y
+sh "$CURRENT_DIR/all-up.sh" -y
+
+printf "✅  All Containers [Reboot] is Done!\n\n"
