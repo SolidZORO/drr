@@ -1,0 +1,21 @@
+version: '3.6'
+
+networks:
+  default:
+    external:
+      name: ${NETWORK_NAME}
+
+services:
+  adminer:
+    container_name: ${__ENV__}_${ADMINER_CONTAINER_NAME}
+    image: ${ADMINER_IMAGE}
+    restart: always
+    environment:
+      ADMINER_PLUGINS: "enum-types enum-option tables-filter sql-log dynamic-title-info"
+      TZ: ${TZ}
+    ports:
+      - ${ADMINER_PORT}:8080
+    volumes:
+      - ./etc/timezone:/etc/timezone:ro
+      - ./etc/localtime:/etc/localtime:ro
+      - ./var/www/html/plugins/dynamic-title-info.php:/var/www/html/plugins/dynamic-title-info.php:ro
