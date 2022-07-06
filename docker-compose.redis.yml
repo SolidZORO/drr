@@ -1,0 +1,14 @@
+version: '3.6'
+
+networks:
+  default:
+    name: ${NETWORK_NAME}
+    external: true
+
+services:
+  redis:
+    container_name: ${__ENV__}_${REDIS_CONTAINER_NAME}
+    image: redis:6.2.7-alpine
+    restart: always
+    ports:
+      - ${REDIS_PORT}:80
